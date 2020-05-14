@@ -64,6 +64,7 @@ public class Controller {
         viewHateCount(text);
         viewMusicCount(text);
         viewVowelsPercentage(text, charsCount);
+        viewAERatio(text);
         viewPercentageForEachLetter(text, charsCount);
     }
 
@@ -108,6 +109,12 @@ public class Controller {
 
     private void viewDictionary(IterableText iterableText) {
         view.printInt(new StatisticalAnalysis(iterableText.wordIterator()).dictionarySize(), "Different words used: ");
+    }
+
+    private void viewAERatio(IterableText text){
+        int aCount = new StatisticalAnalysis(text.charIterator()).countOf("a");
+        int eCount = new StatisticalAnalysis(text.charIterator()).countOf("e");
+        view.printDouble((double) aCount/eCount, "A : E ratio:");
     }
 
     private void viewPercentageForEachLetter(IterableText iterableText, int lettersCount) {

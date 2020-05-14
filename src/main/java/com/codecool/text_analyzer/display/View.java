@@ -13,6 +13,11 @@ public class View {
         System.out.println();
     }
 
+    public void printDouble(Double number, String title) {
+        System.out.println(title);
+        System.out.println(String.format("%.2f", number));
+    }
+
     public void printInt(Integer number, String title) {
         System.out.println(title);
         System.out.println(number);

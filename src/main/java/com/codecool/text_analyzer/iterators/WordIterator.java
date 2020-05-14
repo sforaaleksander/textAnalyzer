@@ -27,7 +27,11 @@ public class WordIterator extends Readable implements Iterator<String> {
 
     @Override
     public boolean hasNext() {
-        return index < words.size();
+        if (index == words.size() - 1) {
+            index = 0;
+            return false;
+        }
+        return true;
     }
 
     @Override

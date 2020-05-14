@@ -29,7 +29,11 @@ public class CharIterator extends Readable implements Iterator<String> {
 
     @Override
     public boolean hasNext() {
-        return index < chars.size();
+        if (index == chars.size() - 1) {
+            index = 0;
+            return false;
+        }
+        return true;
     }
 
     @Override

@@ -3,6 +3,8 @@ package com.codecool.text_analyzer.controller;
 import com.codecool.text_analyzer.content.FileContent;
 import com.codecool.text_analyzer.content.IterableText;
 import com.codecool.text_analyzer.display.View;
+import com.codecool.text_analyzer.iterators.CharIterator;
+import com.codecool.text_analyzer.iterators.WordIterator;
 import com.codecool.text_analyzer.statistics.StatisticalAnalysis;
 
 import java.io.File;
@@ -52,20 +54,26 @@ public class Controller {
     private void handleAnalysis(String fileName) {
         FileContent text = new FileContent(fileName);
 
-        int charsCount = new StatisticalAnalysis(text.charIterator()).size();
-        int wordsCount = new StatisticalAnalysis(text.wordIterator()).size();
+        WordIterator wordIterator = new WordIterator(text);
+        CharIterator charIterator = new CharIterator(text);
+
+        StatisticalAnalysis charAnalysis = new StatisticalAnalysis(charIterator);
+        StatisticalAnalysis wordAnalysis = new StatisticalAnalysis(wordIterator);
+
+        int charsCount = charAnalysis.size();
+        int wordsCount = wordAnalysis.size();
 
         viewFileName(fileName);
         viewAllCharsCount(charsCount);
         viewAllWordsCount(wordsCount);
-        viewDictionary(text);
-        viewMoreThanOnePercentWords(text, wordsCount);
-        viewLoveCount(text);
-        viewHateCount(text);
-        viewMusicCount(text);
-        viewVowelsPercentage(text, charsCount);
-        viewAERatio(text);
-        viewPercentageForEachLetter(text, charsCount);
+        viewDictionary(wordAnalysis);
+        viewMoreThanOnePercentWords(wordAnalysis, wordsCount);
+        viewLoveCount(wordAnalysis);
+        viewHateCount(wordAnalysis);
+        viewMusicCount(wordAnalysis);
+        viewVowelsPercentage(charAnalysis, charsCount);
+        viewAERatio(charAnalysis);
+        viewPercentageForEachLetter(charAnalysis, charsCount);
     }
 
     private void viewAllWordsCount(int wordsCount) {
@@ -76,23 +84,23 @@ public class Controller {
         view.printInt(charsCount, "Letters count: ");
     }
 
-    private void viewVowelsPercentage(IterableText iterableText, int charsCount) {
+    private void viewVowelsPercentage(StatisticalAnalysis charAnalysis, int charsCount) {
         String[] vowelsArr = "aeiouy".split("");
-        int vowelsCount = new StatisticalAnalysis(iterableText.charIterator()).countOf(vowelsArr);
+        int vowelsCount = charAnalysis.countOf(vowelsArr);
         int vowelsPercentage = charsCount / vowelsCount;
         view.printInt(vowelsPercentage, "Vowels percentage: ");
     }
 
-    private void viewLoveCount(IterableText iterableText) {
-        view.printInt(new StatisticalAnalysis(iterableText.wordIterator()).countOf("love"), "'Love' count: ");
+    private void viewLoveCount(StatisticalAnalysis wordAnalysis) {
+        view.printInt(wordAnalysis.countOf("love"), "'Love' count: ");
     }
 
-    private void viewHateCount(IterableText iterableText) {
-        view.printInt(new StatisticalAnalysis(iterableText.wordIterator()).countOf("hate"), "'Hate' count: ");
+    private void viewHateCount(StatisticalAnalysis wordAnalysis) {
+        view.printInt(wordAnalysis.countOf("hate"), "'Hate' count: ");
     }
 
-    private void viewMusicCount(IterableText iterableText) {
-        view.printInt(new StatisticalAnalysis(iterableText.wordIterator()).countOf("music"), "'Music' count: ");
+    private void viewMusicCount(StatisticalAnalysis wordAnalysis) {
+        view.printInt(wordAnalysis.countOf("music"), "'Music' count: ");
     }
 
     private void viewFileName(String fileName) {
@@ -100,28 +108,28 @@ public class Controller {
         view.printString(formatted, "");
     }
 
-    private void viewMoreThanOnePercentWords(IterableText iterableText, int wordsCount) {
+    private void viewMoreThanOnePercentWords(StatisticalAnalysis wordAnalysis, int wordsCount) {
         double onePercent = 0.01;
         Double onePercentOfAllWords = onePercent * wordsCount;
-        view.printSet(new StatisticalAnalysis(iterableText.wordIterator()).occurMoreThan(onePercentOfAllWords.intValue()),
+        view.printSet(wordAnalysis.occurMoreThan(onePercentOfAllWords.intValue()),
                 "Words making up more than 1% of the text");
     }
 
-    private void viewDictionary(IterableText iterableText) {
-        view.printInt(new StatisticalAnalysis(iterableText.wordIterator()).dictionarySize(), "Different words used: ");
+    private void viewDictionary(StatisticalAnalysis wordAnalysis) {
+        view.printInt(wordAnalysis.dictionarySize(), "Different words used: ");
     }
 
-    private void viewAERatio(IterableText text){
-        int aCount = new StatisticalAnalysis(text.charIterator()).countOf("a");
-        int eCount = new StatisticalAnalysis(text.charIterator()).countOf("e");
+    private void viewAERatio(StatisticalAnalysis charAnalysis){
+        int aCount = charAnalysis.countOf("a");
+        int eCount = charAnalysis.countOf("e");
         view.printDouble((double) aCount/eCount, "A : E ratio:");
     }
 
-    private void viewPercentageForEachLetter(IterableText iterableText, int lettersCount) {
+    private void viewPercentageForEachLetter(StatisticalAnalysis charAnalysis, int lettersCount) {
         String[] alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
         Map<String, Double> lettersPercentages = new HashMap<>();
         for (String letter : alphabet) {
-            int thisLetterCount = new StatisticalAnalysis(iterableText.charIterator()).countOf(letter);
+            int thisLetterCount = charAnalysis.countOf(letter);
             Double percentageOfLetter = (double) (thisLetterCount * 100) / lettersCount;
             lettersPercentages.put(letter, percentageOfLetter);
         }

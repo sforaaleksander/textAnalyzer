@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class WordIterator extends Readable implements Iterator<String> {
 
-    private FileContent fileContent;
+    private final FileContent fileContent;
     private final List<String> words;
     private int index;
 
@@ -39,9 +39,5 @@ public class WordIterator extends Readable implements Iterator<String> {
 
     @Override
     public void remove() {
-    }
-
-    public int getWordsSize() {
-        return words.size();
     }
 }

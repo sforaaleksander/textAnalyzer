@@ -8,19 +8,19 @@ import java.util.Iterator;
 
 public class FileContent implements IterableText {
 
-    private String fileName;
+    private final String fileName;
 
     public FileContent(String fileName) {
         this.fileName = fileName;
     }
 
     @Override
-    public Iterator charIterator() {
+    public Iterator<String> charIterator() {
         return new CharIterator(this);
     }
 
     @Override
-    public Iterator wordIterator() {
+    public Iterator<String> wordIterator() {
         return new WordIterator(this);
     }
 

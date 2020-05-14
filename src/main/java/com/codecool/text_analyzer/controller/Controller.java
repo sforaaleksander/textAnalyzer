@@ -10,8 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Controller {
-    private String[] args;
-    private View view;
+    private final String[] args;
+    private final View view;
     private long startingTime;
 
     public Controller(String[] args) {

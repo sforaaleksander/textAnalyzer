@@ -39,8 +39,4 @@ public class CharIterator extends Readable implements Iterator<String> {
         }
         return null;
     }
-
-    public int getCharsSize() {
-        return chars.size();
-    }
 }

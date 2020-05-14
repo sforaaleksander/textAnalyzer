@@ -10,15 +10,10 @@ public class View {
         for (Map.Entry<String, Double> element : map.entrySet()) {
             System.out.print(String.format("%S : %.2f, ", element.getKey(), element.getValue()));
         }
-        System.out.println("");
+        System.out.println();
     }
 
     public void printInt(Integer number, String title) {
-        System.out.println(title);
-        System.out.println(number);
-    }
-
-    public void printDouble(Double number, String title) {
         System.out.println(title);
         System.out.println(number);
     }
@@ -33,7 +28,7 @@ public class View {
         for (String element : set) {
             System.out.print(element + ", ");
         }
-        System.out.println("");
+        System.out.println();
     }
 
     public void displayNoArgsMessage() {

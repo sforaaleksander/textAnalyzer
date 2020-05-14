@@ -10,10 +10,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class StatisticalAnalysis {
-    private Iterator<String> iterator;
+    private final Iterator<String> iterator;
 
-
-    public StatisticalAnalysis(Iterator iterator) {
+    public StatisticalAnalysis(Iterator<String> iterator) {
         this.iterator = iterator;
     }
 

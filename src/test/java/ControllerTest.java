@@ -1,7 +1,7 @@
 import com.codecool.text_analyzer.controller.Controller;
 import com.codecool.text_analyzer.display.View;
-import org.junit.Before;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -16,11 +16,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class ControllerTest {
 
     private Controller controller;
-    private OutputStream outputStream;
+    private static OutputStream outputStream;
 
-    @BeforeEach
-    void before(){
-        this.outputStream = new ByteArrayOutputStream();
+    @BeforeAll
+    static void initializeOutput(){
+        outputStream = new ByteArrayOutputStream();
     }
 
     @Test
@@ -29,6 +29,16 @@ class ControllerTest {
         View view = new View(new PrintStream(outputStream));
         controller = new Controller(args, view);
         assertThrows(IllegalArgumentException.class, () ->controller.start());
+    }
+
+    @Test
+    void anoFileGiven() {
+        String[] args = {};
+        View view = new View(new PrintStream(outputStream));
+        controller = new Controller(args, view);
+        controller.start();
+        System.out.println(outputStream.toString());
+        assertEquals("Please provide at least one file name to analyze.\n", outputStream.toString());
     }
 
     @Test

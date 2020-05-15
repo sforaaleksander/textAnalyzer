@@ -44,4 +44,8 @@ public class WordIterator extends Readable implements Iterator<String> {
     @Override
     public void remove() {
     }
+
+    public List<String> getWords() {
+        return words;
+    }
 }

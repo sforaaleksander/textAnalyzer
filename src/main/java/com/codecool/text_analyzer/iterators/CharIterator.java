@@ -43,4 +43,8 @@ public class CharIterator extends Readable implements Iterator<String> {
         }
         return null;
     }
+
+    public List<String> getChars() {
+        return chars;
+    }
 }

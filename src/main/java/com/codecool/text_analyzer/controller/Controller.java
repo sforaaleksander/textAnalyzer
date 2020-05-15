@@ -17,9 +17,9 @@ public class Controller {
     private StatisticalAnalysis charAnalysis;
     private StatisticalAnalysis wordAnalysis;
 
-    public Controller(String[] args) {
+    public Controller(String[] args, View view) {
         this.args = args;
-        view = new View();
+        this.view = view;
     }
 
     private static boolean areArgsValid(String[] args) {
@@ -112,7 +112,7 @@ public class Controller {
         int wordsCount = wordAnalysis.size();
         Double onePercentOfAllWords = onePercent * wordsCount;
         view.printSet(wordAnalysis.occurMoreThan(onePercentOfAllWords.intValue()),
-                "Words making up more than 1% of the text");
+                "Words making up more than 1% of the text: ");
     }
 
     private void viewDictionary() {
@@ -122,7 +122,7 @@ public class Controller {
     private void viewAERatio(){
         int aCount = charAnalysis.countOf("a");
         int eCount = charAnalysis.countOf("e");
-        view.printDouble((double) aCount/eCount, "A : E ratio:");
+        view.printDouble((double) aCount/eCount, "A : E ratio: ");
     }
 
     private void viewPercentageForEachLetter() {

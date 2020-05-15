@@ -2,45 +2,51 @@ package com.codecool.text_analyzer.display;
 
 import java.util.Map;
 import java.util.Set;
+import java.io.PrintStream;
 
 public class View {
+    private PrintStream printStream;
+
+    public View(PrintStream printStream){
+        this.printStream = printStream;
+    }
 
     public void printDoubleMap(Map<String, Double> map, String title) {
-        System.out.println(title);
+        printStream.print(title);
         for (Map.Entry<String, Double> element : map.entrySet()) {
-            System.out.print(String.format("%S : %.2f, ", element.getKey(), element.getValue()));
+            printStream.print(String.format("%S : %.2f, ", element.getKey(), element.getValue()));
         }
-        System.out.println();
+        printStream.println();
     }
 
     public void printDouble(Double number, String title) {
-        System.out.println(title);
-        System.out.println(String.format("%.2f", number));
+        printStream.print(title);
+        printStream.println(String.format("%.2f", number));
     }
 
     public void printInt(Integer number, String title) {
-        System.out.println(title);
-        System.out.println(number);
+        printStream.print(title);
+        printStream.println(number);
     }
 
     public void printString(String string, String title) {
-        System.out.println(title);
-        System.out.println(string);
+        printStream.print(title);
+        printStream.println(string);
     }
 
     public void printSet(Set<String> set, String title) {
-        System.out.println(title);
+        printStream.print(title);
         for (String element : set) {
-            System.out.print(element + ", ");
+            printStream.print(element + ", ");
         }
-        System.out.println();
+        printStream.println();
     }
 
     public void displayNoArgsMessage() {
-        System.out.println("Please provide at least one file name to analyze.");
+        printStream.println("Please provide at least one file name to analyze.");
     }
 
     public void printTime(double time) {
-        System.out.println("Performance time: " + time);
+        printStream.print("Performance time: " + time);
     }
 }
